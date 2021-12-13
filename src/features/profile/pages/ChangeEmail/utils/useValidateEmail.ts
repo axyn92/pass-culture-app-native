@@ -3,12 +3,23 @@ import { t } from '@lingui/macro'
 import { useUserProfileInfo } from 'features/home/api'
 import { isEmailValid } from 'ui/components/inputs/emailCheck'
 
-export const useIsCurrentUserEmail = (email: string): boolean => {
-  const { data: user } = useUserProfileInfo()
-  return email.toLowerCase() === user?.email?.toLowerCase()
+type LowerCaseEmail = string & { brand: 'LowerCaseEmail' }
+
+export const toLowerCaseEmail = (text: string): LowerCaseEmail => {
+  return text.toLowerCase() as LowerCaseEmail
 }
 
-export function useValidateEmail(email: string): string | null {
+const doEmailsEqual = (email1: LowerCaseEmail, email2: LowerCaseEmail) => email1 === email2
+
+export const useIsCurrentUserEmail = (email: LowerCaseEmail): boolean => {
+  const { data: user } = useUserProfileInfo()
+  if (!user?.email) return false
+
+  const currentEmail = toLowerCaseEmail(user?.email)
+  return doEmailsEqual(email, currentEmail)
+}
+
+export function useValidateEmail(email: LowerCaseEmail): string | null {
   const isCurrentUserEmail = useIsCurrentUserEmail(email)
 
   if (email.length === 0) return null

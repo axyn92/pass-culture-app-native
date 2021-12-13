@@ -16,7 +16,10 @@ import { ChangeEmailRequest, CHANGE_EMAIL_ERROR_CODE } from 'features/profile/ap
 import { AlreadyChangedEmailDisclaimer } from 'features/profile/pages/ChangeEmail/AlreadyChangedEmailDisclaimer'
 import { ChangeEmailDisclaimer } from 'features/profile/pages/ChangeEmail/ChangeEmailDisclaimer'
 import { useCheckHasCurrentEmailChange } from 'features/profile/pages/ChangeEmail/utils/useCheckHasCurrentEmailChange'
-import { useValidateEmail } from 'features/profile/pages/ChangeEmail/utils/useValidateEmail'
+import {
+  toLowerCaseEmail,
+  useValidateEmail,
+} from 'features/profile/pages/ChangeEmail/utils/useValidateEmail'
 import { analytics } from 'libs/analytics'
 import { useSafeState } from 'libs/hooks'
 import { ButtonPrimary } from 'ui/components/buttons/ButtonPrimary'
@@ -33,7 +36,7 @@ export function ChangeEmail() {
   const theme = useTheme()
   const [email, setEmail] = useSafeState('')
   const [password, setPassword] = useSafeState('')
-  const emailErrorMessage = useValidateEmail(email)
+  const emailErrorMessage = useValidateEmail(toLowerCaseEmail(email))
   const [passwordErrorMessage, setPasswordErrorMessage] = useSafeState<string | null>(null)
   const { navigate } = useNavigation<UseNavigationType>()
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBarContext()
