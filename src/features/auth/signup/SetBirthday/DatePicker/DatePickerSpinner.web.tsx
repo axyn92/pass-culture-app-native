@@ -27,7 +27,7 @@ interface Props {
 const MINIMUM_DATE = 1900
 const DEFAULT_YOUNGEST_AGE = 15
 
-export function DatePickerTouch(props: Props) {
+export function DatePickerSpinner(props: Props) {
   const CURRENT_DATE = new Date()
   const CURRENT_DATE_WITHOUT_TIME = formatDateToISOStringWithoutTime(CURRENT_DATE)
 
