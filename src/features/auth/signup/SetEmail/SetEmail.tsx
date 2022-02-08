@@ -18,7 +18,7 @@ export const SetEmail: FunctionComponent<PreValidationSignupStepProps> = (props)
   const [email, setEmail] = useState('')
   const [hasError, setHasError] = useState(false)
   const [isNewsletterChecked, setIsNewsletterChecked] = useState(false)
-
+  const emailInputLabel = 'emailInputLabel'
   const shouldDisableValidateButton = isValueEmpty(email)
 
   const emailInput = useRef<RNTextInput | null>(null)
@@ -47,11 +47,13 @@ export const SetEmail: FunctionComponent<PreValidationSignupStepProps> = (props)
         autoFocus={true}
         onSubmitEditing={validateEmail}
         ref={emailInput}
+        aria-label={emailInputLabel}
       />
       <InputError
         visible={hasError}
         messageId={t`L'e-mail renseigné est incorrect. Exemple de format attendu\u00a0: edith.piaf@email.fr`}
         numberOfSpacesTop={2}
+        relatedInputId={emailInputLabel}
       />
       <Spacer.Column numberOfSpaces={4} />
       <StyledCheckBox

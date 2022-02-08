@@ -54,6 +54,7 @@ export const SetBirthday: FunctionComponent<PreValidationSignupStepProps> = (pro
     isTooOld: false,
   })
   const { data: settings } = useAppSettings()
+  const birthdateInputLabel = 'birthdateInputLabel'
 
   const now = new Date()
   const youngestAge = settings?.accountCreationMinimumAge ?? DEFAULT_YOUNGEST_AGE
@@ -102,11 +103,17 @@ export const SetBirthday: FunctionComponent<PreValidationSignupStepProps> = (pro
           visible
           messageId={t`Tu dois avoir\u00a0${youngestAge}\u00a0ans pour t'inscrire`}
           numberOfSpacesTop={5}
+          relatedInputId={birthdateInputLabel}
         />
       )
     }
     return (
-      <InputError visible messageId={t`La date choisie est incorrecte`} numberOfSpacesTop={5} />
+      <InputError
+        visible
+        messageId={t`La date choisie est incorrecte`}
+        numberOfSpacesTop={5}
+        relatedInputId={birthdateInputLabel}
+      />
     )
   }
 
@@ -122,6 +129,7 @@ export const SetBirthday: FunctionComponent<PreValidationSignupStepProps> = (pro
           <DatePickerTouch
             goToNextStep={props.goToNextStep}
             accessibilityLabelForNextStep={props.accessibilityLabelForNextStep}
+            aria-label={birthdateInputLabel}
           />
         ) : (
           <React.Fragment>
@@ -137,6 +145,7 @@ export const SetBirthday: FunctionComponent<PreValidationSignupStepProps> = (pro
                 initialMonth={INITIAL_MONTH}
                 initialYear={INITIAL_YEAR}
                 onSubmit={goToNextStep}
+                aria-label={birthdateInputLabel}
               />
               {renderErrorMessages()}
             </DateInputContainer>

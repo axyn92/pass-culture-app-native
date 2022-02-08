@@ -89,6 +89,7 @@ export const FavoritesSorts: React.FC = () => {
                 {!!isSelected && <ValidatePrimary />}
               </LabelContainer>
               {sortBy === 'AROUND_ME' && positionError ? (
+                // @ts-ignore TODO input not on the same page as error message
                 <InputError visible messageId={positionError.message} numberOfSpacesTop={1} />
               ) : null}
             </React.Fragment>

@@ -11,12 +11,12 @@ interface Props {
   visible: boolean
   numberOfSpacesTop: number
   centered?: boolean
-  relatedInputId?: string
+  relatedInputId: string
 }
 
 export const InputError: FC<Props> = (props) => {
   return props.visible ? (
-    <ErrorMessage relatedInputId={props.relatedInputId || ''}>
+    <ErrorMessage relatedInputId={props.relatedInputId}>
       <Spacer.Column testID="input-error-top-spacer" numberOfSpaces={props.numberOfSpacesTop} />
       <InputRule
         title={props.messageId}

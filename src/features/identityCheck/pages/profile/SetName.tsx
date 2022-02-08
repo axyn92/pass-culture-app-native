@@ -23,6 +23,8 @@ export const SetName = () => {
   const isValidFirstName = isNameValid(firstName)
   const isValidLastName = isNameValid(lastName)
   const disabled = !isValidFirstName || !isValidLastName
+  const lastnameInputLabel = 'lastnameInputLabel'
+  const usernameInputLabel = 'usernameInputLabel'
 
   function submitName() {
     if (disabled) return
@@ -52,11 +54,13 @@ export const SetName = () => {
             textContentType="username"
             isRequiredField
             {...accessibilityAndTestId(t`Entrée pour le prénom`)}
+            aria-label={lastnameInputLabel}
           />
           <InputError
             visible={!isValidFirstName && firstName.length > 0}
             messageId={t`Ton prénom ne doit pas contenir de chiffres ou de caractères spéciaux.`}
             numberOfSpacesTop={2}
+            relatedInputId={lastnameInputLabel}
           />
           <Spacer.Column numberOfSpaces={6} />
           <TextInput
@@ -67,11 +71,13 @@ export const SetName = () => {
             textContentType="username"
             isRequiredField
             {...accessibilityAndTestId(t`Entrée pour le nom`)}
+            aria-label={usernameInputLabel}
           />
           <InputError
             visible={!isValidLastName && lastName.length > 0}
             messageId={t`Ton nom ne doit pas contenir de chiffres ou de caractères spéciaux.`}
             numberOfSpacesTop={2}
+            relatedInputId={usernameInputLabel}
           />
         </Form.MaxWidth>
       }

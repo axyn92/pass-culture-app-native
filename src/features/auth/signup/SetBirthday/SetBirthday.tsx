@@ -28,6 +28,7 @@ export const SetBirthday: FunctionComponent<PreValidationSignupStepProps> = (pro
   const [date, setDate] = useState<Date>(CURRENT_DATE)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [isDisabled, setIsDisabled] = useState(true)
+  const birthdateInputLabel = 'birthdateInputLabel'
 
   const { visible, showModal: showInformationModal, hideModal } = useModal(false)
 
@@ -76,7 +77,14 @@ export const SetBirthday: FunctionComponent<PreValidationSignupStepProps> = (pro
         />
         <Spacer.Column numberOfSpaces={5} />
         <DateInput date={date} isFocus={!isDisabled} isError={!!errorMessage} />
-        {!!errorMessage && <InputError visible messageId={errorMessage} numberOfSpacesTop={2} />}
+        {!!errorMessage && (
+          <InputError
+            visible
+            messageId={errorMessage}
+            numberOfSpacesTop={2}
+            relatedInputId={birthdateInputLabel}
+          />
+        )}
         <Spacer.Column numberOfSpaces={5} />
         <SpinnerDatePicker
           testID="datePicker"
@@ -87,6 +95,7 @@ export const SetBirthday: FunctionComponent<PreValidationSignupStepProps> = (pro
           maximumDate={CURRENT_DATE}
           minimumDate={MINIMUM_DATE}
           androidVariant="nativeAndroid"
+          aria-label={birthdateInputLabel}
         />
         <Spacer.Column numberOfSpaces={2} />
         <ButtonPrimary

@@ -38,6 +38,8 @@ export const SetCity = () => {
   const [selectedCity, setSelectedCity] = useState<SuggestedCity | null>(profile.city || null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+  const postalCodeInputLabel = 'postalCodeInputLabel'
+
   const debouncedSetPostalCode = useRef(debounce(setDebouncedPostalCode, 500)).current
   const { data: cities = [], isLoading, isError, isSuccess } = useCities(debouncedPostalCode)
 
@@ -98,8 +100,16 @@ export const SetCity = () => {
             accessibilityLabel={t`Entrée pour le code postal`}
             onPressRightIcon={resetSearch}
             keyboardType="number-pad"
+            aria-label={postalCodeInputLabel}
           />
-          {!!errorMessage && <InputError messageId={errorMessage} numberOfSpacesTop={2} visible />}
+          {!!errorMessage && (
+            <InputError
+              messageId={errorMessage}
+              numberOfSpacesTop={2}
+              visible
+              relatedInputId={postalCodeInputLabel}
+            />
+          )}
           <Spacer.Column numberOfSpaces={2} />
         </Form.MaxWidth>
       }

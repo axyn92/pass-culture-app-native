@@ -30,6 +30,7 @@ const DEFAULT_YOUNGEST_AGE = 15
 export function DatePickerTouch(props: Props) {
   const CURRENT_DATE = new Date()
   const CURRENT_DATE_WITHOUT_TIME = formatDateToISOStringWithoutTime(CURRENT_DATE)
+  const dateInputLabel = 'dateInputLabel'
 
   const [date, setDate] = useState({
     day: CURRENT_DATE.getDate(),
@@ -99,8 +100,20 @@ export function DatePickerTouch(props: Props) {
   return (
     <React.Fragment>
       <Spacer.Column numberOfSpaces={2} />
-      <DateInput date={new Date(birthdate)} isFocus={!isDisabled} isError={!!errorMessage} />
-      {!!errorMessage && <InputError visible messageId={errorMessage} numberOfSpacesTop={2} />}
+      <DateInput
+        date={new Date(birthdate)}
+        isFocus={!isDisabled}
+        isError={!!errorMessage}
+        aria-label={dateInputLabel}
+      />
+      {!!errorMessage && (
+        <InputError
+          visible
+          messageId={errorMessage}
+          numberOfSpacesTop={2}
+          relatedInputId={dateInputLabel}
+        />
+      )}
       <Spacer.Column numberOfSpaces={2} />
       <CalendarPickerWrapper>
         <Picker valueGroups={date} optionGroups={optionGroups} onChange={onDateChange} />

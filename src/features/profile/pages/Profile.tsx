@@ -47,6 +47,7 @@ export const Profile: React.FC = () => {
   const { isLoggedIn } = useAuthContext()
   const signOut = useLogoutRoutine()
   const scrollViewRef = useRef<ScrollView | null>(null)
+  const locationActivationLabel = 'locationActivationLabel'
 
   const { positionError, permissionState, requestGeolocPermission, showGeolocPermissionModal } =
     useGeolocation()
@@ -146,9 +147,15 @@ export const Profile: React.FC = () => {
               debouncedLogLocationToggle(!isGeolocSwitchActive)
             }}
             toggleLabel={t`Partager ma position`}
+            aria-label={locationActivationLabel}
           />
           {!!positionError && (
-            <InputError visible messageId={positionError.message} numberOfSpacesTop={1} />
+            <InputError
+              visible
+              messageId={positionError.message}
+              numberOfSpacesTop={1}
+              relatedInputId={locationActivationLabel}
+            />
           )}
         </Section>
         <Section title={t`Aides`}>

@@ -56,6 +56,8 @@ export const SetPhoneNumber = memo(function SetPhoneNumberComponent() {
     validationCodeRequestTimestamp,
     (elapsedTime: number) => elapsedTime > TIMER
   )
+  const phoneNumberInputLabel = 'phoneNumberInputLabel'
+
   const isRequestTimestampExpired =
     !validationCodeRequestTimestamp ||
     timeSinceLastRequest === TIMER_NOT_INITIALIZED ||
@@ -143,6 +145,7 @@ export const SetPhoneNumber = memo(function SetPhoneNumberComponent() {
             <InputContainer>
               <StyledCountryPicker initialCountry={INITIAL_COUNTRY} onSelect={setCountry} />
               <StyledTextInput
+                aria-label={phoneNumberInputLabel}
                 autoCapitalize="none"
                 isError={false}
                 keyboardType="number-pad"
@@ -155,7 +158,12 @@ export const SetPhoneNumber = memo(function SetPhoneNumberComponent() {
             </InputContainer>
             {invalidPhoneNumberMessage ? (
               <React.Fragment>
-                <InputError visible messageId={invalidPhoneNumberMessage} numberOfSpacesTop={3} />
+                <InputError
+                  relatedInputId={phoneNumberInputLabel}
+                  visible
+                  messageId={invalidPhoneNumberMessage}
+                  numberOfSpacesTop={3}
+                />
                 <Spacer.Column numberOfSpaces={5} />
               </React.Fragment>
             ) : (

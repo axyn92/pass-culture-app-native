@@ -71,6 +71,7 @@ export const CalendarPicker: React.FC<Props> = ({
     month: monthNamesShort[selectedDate.getMonth()],
     year: selectedDate.getFullYear(),
   })
+  const bookingDateChoiceLabel = 'bookingDateChoiceLabel'
 
   useEffect(() => {
     if (ref.current) {
@@ -170,6 +171,7 @@ export const CalendarPicker: React.FC<Props> = ({
             theme={calendarTheme}
             markedDates={markedDates}
             onDayPress={handleDesktopDateChange}
+            aria-label={bookingDateChoiceLabel}
           />
         </CalendarPickerWrapperDesktop>
       )}
@@ -188,6 +190,7 @@ export const CalendarPicker: React.FC<Props> = ({
               visible
               messageId={t`Choisis une date dans le futur`}
               numberOfSpacesTop={2}
+              relatedInputId={bookingDateChoiceLabel}
             />
             <Spacer.Column numberOfSpaces={1} />
           </React.Fragment>

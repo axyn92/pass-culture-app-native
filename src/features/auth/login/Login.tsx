@@ -49,6 +49,8 @@ export const Login: FunctionComponent<Props> = memo(function Login(props) {
   const [hasEmailError, setHasEmailError] = useSafeState(false)
   const signIn = useSignIn()
   const shouldDisableLoginButton = isValueEmpty(email) || isValueEmpty(password) || isLoading
+  const emailInputLabel = 'emailInputLabel'
+  const passwordInputLabel = 'passwordInputLabel'
 
   const { params } = useRoute<UseRouteType<'Login'>>()
   const { navigate } = useNavigation<UseNavigationType>()
@@ -152,7 +154,13 @@ export const Login: FunctionComponent<Props> = memo(function Login(props) {
       />
       <Form.MaxWidth>
         {!!errorMessage && (
-          <InputError visible messageId={errorMessage} numberOfSpacesTop={5} centered />
+          <InputError
+            visible
+            messageId={errorMessage}
+            numberOfSpacesTop={5}
+            centered
+            relatedInputId={passwordInputLabel}
+          />
         )}
         <Spacer.Column numberOfSpaces={7} />
         <EmailInput
@@ -161,11 +169,13 @@ export const Login: FunctionComponent<Props> = memo(function Login(props) {
           onEmailChange={onEmailChange}
           isError={hasEmailError || !!errorMessage}
           isRequiredField
+          aria-label={emailInputLabel}
         />
         <InputError
           visible={hasEmailError}
           messageId={t`L'e-mail renseigné est incorrect. Exemple de format attendu\u00a0: edith.piaf@email.fr`}
           numberOfSpacesTop={2}
+          relatedInputId={emailInputLabel}
         />
         <Spacer.Column numberOfSpaces={6} />
         <PasswordInput
@@ -177,6 +187,7 @@ export const Login: FunctionComponent<Props> = memo(function Login(props) {
           textContentType="password"
           onSubmitEditing={onSubmit}
           isRequiredField
+          aria-label={passwordInputLabel}
         />
         <Spacer.Column numberOfSpaces={7} />
         <ButtonContainer>

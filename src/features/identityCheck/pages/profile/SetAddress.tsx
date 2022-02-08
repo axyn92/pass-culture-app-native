@@ -36,6 +36,7 @@ export const SetAddress = () => {
   const [debouncedQuery, setDebouncedQuery] = useState<string>(query)
   const [selectedAddress, setSelectedAddress] = useState<string | null>(profile.address || null)
   const debouncedSetQuery = useRef(debounce(setDebouncedQuery, 500)).current
+  const adressInputLabel = 'adressInputLabel'
 
   const idCheckAddressAutocompletion = !!settings?.idCheckAddressAutocompletion
 
@@ -113,11 +114,13 @@ export const SetAddress = () => {
             textContentType="addressState"
             accessibilityLabel={t`Entrée pour l'adresse`}
             onPressRightIcon={resetSearch}
+            aria-label={adressInputLabel}
           />
           <InputError
             visible={!isValidAddress && query.length > 0}
             messageId={t`Ton adresse ne doit pas contenir de caractères spéciaux ou n'être composée que d'espaces.`}
             numberOfSpacesTop={2}
+            relatedInputId={adressInputLabel}
           />
           <Spacer.Column numberOfSpaces={2} />
         </Form.MaxWidth>

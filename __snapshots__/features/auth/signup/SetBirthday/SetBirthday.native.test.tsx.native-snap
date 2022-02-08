@@ -193,6 +193,7 @@ exports[`<SetBirthday /> should render correctly 1`] = `
   />
   <RNDatePicker
     androidVariant="nativeAndroid"
+    aria-label="birthdateInputLabel"
     cancelText="Cancel"
     confirmText="Confirm"
     date={1606780800000}

@@ -21,6 +21,7 @@ import { useAppSettings } from '../../settings'
 export const AcceptCgu: FC<PreValidationSignupStepProps> = (props) => {
   const { data: settings, isLoading: areSettingsLoading } = useAppSettings()
   const networkInfo = useNetInfo()
+  const checkCGULabel = 'checkCGULabel'
 
   const [isDoingReCaptchaChallenge, setIsDoingReCaptchaChallenge] = useState(false)
   const [isFetching, setIsFetching] = useState(false)
@@ -135,8 +136,16 @@ export const AcceptCgu: FC<PreValidationSignupStepProps> = (props) => {
           onPress={onSubmit}
           isLoading={isDoingReCaptchaChallenge || isFetching}
           disabled={disabled}
+          aria-label={checkCGULabel}
         />
-        {!!errorMessage && <InputError visible messageId={errorMessage} numberOfSpacesTop={5} />}
+        {!!errorMessage && (
+          <InputError
+            visible
+            messageId={errorMessage}
+            numberOfSpacesTop={5}
+            relatedInputId={checkCGULabel}
+          />
+        )}
         <Spacer.Column numberOfSpaces={5} />
       </CardContent>
     </React.Fragment>

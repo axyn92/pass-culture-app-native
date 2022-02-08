@@ -41,6 +41,9 @@ export function ChangeEmail() {
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBarContext()
   const { hasCurrentEmailChange } = useCheckHasCurrentEmailChange()
 
+  const passwordInputLabel = 'passwordInputLabel'
+  const emailInputLabel = 'emailInputLabel'
+
   const { mutate: changeEmail, isLoading } = useMutation(
     (body: ChangeEmailRequest) => api.postnativev1profileupdateEmail(body),
     {
@@ -122,9 +125,15 @@ export function ChangeEmail() {
               onEmailChange={setEmail}
               disabled={hasCurrentEmailChange}
               isRequiredField
+              aria-label={emailInputLabel}
             />
             {!!emailErrorMessage && (
-              <InputError visible messageId={emailErrorMessage} numberOfSpacesTop={2} />
+              <InputError
+                visible
+                messageId={emailErrorMessage}
+                numberOfSpacesTop={2}
+                relatedInputId={emailInputLabel}
+              />
             )}
             <Spacer.Column numberOfSpaces={4} />
             <PasswordInput
@@ -135,9 +144,15 @@ export function ChangeEmail() {
               textContentType="password"
               disabled={hasCurrentEmailChange}
               isRequiredField
+              aria-label={passwordInputLabel}
             />
             {!!passwordErrorMessage && (
-              <InputError visible messageId={passwordErrorMessage} numberOfSpacesTop={2} />
+              <InputError
+                visible
+                messageId={passwordErrorMessage}
+                numberOfSpacesTop={2}
+                relatedInputId={passwordInputLabel}
+              />
             )}
 
             {isMobileViewport && isTouch ? (

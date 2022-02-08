@@ -59,6 +59,7 @@ export const LocationFilter: React.FC = () => {
     dispatch({ type: 'SET_LOCATION_EVERYWHERE' })
     debouncedGoBack()
   }
+  const locationChoiceLabel = 'locationChoiceLabel'
 
   return (
     <Container>
@@ -83,9 +84,15 @@ export const LocationFilter: React.FC = () => {
           testID="aroundMe"
           section={LocationType.AROUND_ME}
           onPress={onPressAroundMe}
+          aria-label={locationChoiceLabel}
         />
         {!!positionError && (
-          <InputError visible messageId={positionError.message} numberOfSpacesTop={1} />
+          <InputError
+            visible
+            messageId={positionError.message}
+            numberOfSpacesTop={1}
+            relatedInputId={locationChoiceLabel}
+          />
         )}
         <Spacer.Column numberOfSpaces={4} />
         <LocationChoice

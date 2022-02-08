@@ -85,6 +85,8 @@ export function ChangePassword() {
   const { bottom } = useSafeAreaInsets()
 
   const disabled = !shouldSave || isLoading
+  const passwordInputLabel = 'passwordInputLabel'
+  const passwordConfirmationLabel = 'passwordConfirmationLabel'
 
   useEnterKeyAction(!disabled ? submitPassword : undefined)
 
@@ -104,11 +106,13 @@ export function ChangePassword() {
             onChangeText={setCurrentPassword}
             placeholder={t`Ton mot de passe actuel`}
             isRequiredField
+            aria-label={passwordInputLabel}
           />
           <InputError
             visible={hasError}
             messageId={t`Mot de passe incorrect`}
             numberOfSpacesTop={0}
+            relatedInputId={passwordInputLabel}
           />
           <Spacer.Column numberOfSpaces={7} />
           <PasswordInput
@@ -132,11 +136,13 @@ export function ChangePassword() {
               setTimeout(() => scrollRef?.current?.scrollToEnd({ animated: true }), 60)
             }}
             isRequiredField
+            aria-label={passwordConfirmationLabel}
           />
           <InputError
             visible={displayNotMatchingError}
             messageId={t`Les mots de passe ne concordent pas`}
             numberOfSpacesTop={2}
+            relatedInputId={passwordConfirmationLabel}
           />
 
           {isMobileViewport && isTouch ? (

@@ -27,6 +27,7 @@ export const ForgottenPassword: FunctionComponent = () => {
   const { data: settings, isLoading: areSettingsLoading } = useAppSettings()
   const { navigate, replace } = useNavigation<UseNavigationType>()
   const networkInfo = useNetInfo()
+  const emailInputLabel = 'emailInputLabel'
 
   const [email, setEmail] = useState('')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -143,8 +144,16 @@ export const ForgottenPassword: FunctionComponent = () => {
             email={email}
             onEmailChange={onEmailChange}
             autoFocus={true}
+            aria-label={emailInputLabel}
           />
-          {!!errorMessage && <InputError visible messageId={errorMessage} numberOfSpacesTop={2} />}
+          {!!errorMessage && (
+            <InputError
+              visible
+              messageId={errorMessage}
+              numberOfSpacesTop={2}
+              relatedInputId={emailInputLabel}
+            />
+          )}
           <Spacer.Column numberOfSpaces={6} />
           <ButtonPrimary
             wording={t`Valider`}
