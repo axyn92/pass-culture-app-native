@@ -3,7 +3,6 @@ import React, { FunctionComponent, useRef, useState } from 'react'
 import { TextInput as RNTextInput } from 'react-native'
 import styled from 'styled-components/native'
 
-import { DatePickerDropDown } from 'features/auth/signup/SetBirthday/DatePicker/DatePickerDropDown.web'
 import { ButtonPrimary } from 'ui/components/buttons/ButtonPrimary'
 import { CheckboxInput } from 'ui/components/inputs/CheckboxInput'
 import { isEmailValid } from 'ui/components/inputs/emailCheck'
@@ -41,10 +40,6 @@ export const SetEmail: FunctionComponent<PreValidationSignupStepProps> = (props)
 
   return (
     <Form.MaxWidth>
-      <DatePickerDropDown
-        goToNextStep={props.goToNextStep}
-        accessibilityLabelForNextStep={props.accessibilityLabelForNextStep}
-      />
       <EmailInput
         label={t`Adresse e-mail`}
         email={email}
