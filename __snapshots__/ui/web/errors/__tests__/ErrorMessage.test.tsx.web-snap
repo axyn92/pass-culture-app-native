@@ -2,6 +2,7 @@
 
 exports[`<ErrorMessage /> should render correctly 1`] = `
 <div
+  aria-labelledby="relatedInputId"
   role="alert"
 >
   <div
