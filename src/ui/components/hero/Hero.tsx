@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { Platform } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import styled from 'styled-components/native'
 
@@ -56,7 +57,7 @@ const ImageContainer = styled.View(({ theme }) => ({
       height: getSpacing(2),
     },
     shadowRadius: getSpacing(3),
-    shadowColor: theme.colors.black,
+    shadowColor:Platform.OS === 'web' ? theme.colors.greyDarkShadow :  theme.colors.black,
     shadowOpacity: 0.2,
   }),
 }))

@@ -7,7 +7,7 @@ import { navigateToHome } from 'features/navigation/helpers'
 import { useMediaQuery } from 'libs/react-responsive/useMediaQuery'
 import { LogoPassCulture } from 'ui/svg/icons/LogoPassCulture'
 import { LogoMinistere } from 'ui/svg/LogoMinistere'
-import { getSpacing } from 'ui/theme'
+import { getShadow, getSpacing } from 'ui/theme'
 
 import { AccessibleTabBar } from './AccessibleTabBar'
 import { Nav } from './Nav'
@@ -122,6 +122,16 @@ const HeaderContainer = webStyled.header(({ theme }) => ({
   maxHeight: theme.navTopHeight,
   justifyContent: 'space-between',
   flexDirection: 'row',
+  zIndex: 1,
+  ...getShadow({
+    shadowOffset: {
+      width: 0,
+      height: getSpacing(1),
+    },
+    shadowRadius: getSpacing(3),
+    shadowColor: theme.colors.greyDarkShadow,
+    shadowOpacity: 0.1,
+  }),
 }))
 
 const LeftContainer = styled(Animated.View)<{ margin: number; isVisible: boolean }>(

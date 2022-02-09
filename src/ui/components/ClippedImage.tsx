@@ -1,92 +1,100 @@
 import React from 'react'
-import Svg, { ClipPath, Defs, G, Path, Use, LinearGradient, Stop } from 'react-native-svg'
-import styled, { useTheme } from 'styled-components/native'
+import {Platform} from 'react-native'
+import Svg, {ClipPath, Defs, G, Path, Use, LinearGradient, Stop} from 'react-native-svg'
+import styled, {useTheme} from 'styled-components/native'
 
-import { Image } from 'libs/react-native-svg/Image'
-import { OfferDigital } from 'ui/svg/icons/OfferDigital'
-import { IconInterface } from 'ui/svg/icons/types'
-import { getShadow } from 'ui/theme'
+import {Image} from 'libs/react-native-svg/Image'
+import {OfferDigital} from 'ui/svg/icons/OfferDigital'
+import {IconInterface} from 'ui/svg/icons/types'
+import {getShadow} from 'ui/theme'
 
 export type ClippedImageProps = {
-  clipId: string
-  path: string
-  width?: number
-  height?: number
+    clipId: string
+    path: string
+    width?: number
+    height?: number
 } & (
-  | {
-      image: string
-      altIcon?: never
-    }
-  | {
-      image?: never
-      altIcon: React.FC<IconInterface>
-    }
-  | {
-      image?: never
-      altIcon?: never
-    }
-)
+    | {
+    image: string
+    altIcon?: never
+}
+    | {
+    image?: never
+    altIcon: React.FC<IconInterface>
+}
+    | {
+    image?: never
+    altIcon?: never
+}
+    )
 
 export function ClippedImage(props: ClippedImageProps) {
-  const { colors } = useTheme()
-  const linearGradientId = props.clipId + '_linear'
-  const pathId = props.clipId + '_path'
-  const Icon = props.altIcon || OfferDigital
+    const {colors} = useTheme()
+    const linearGradientId = props.clipId + '_linear'
+    const pathId = props.clipId + '_path'
+    const Icon = props.altIcon || OfferDigital
 
-  return (
-    <Container>
-      <Svg width={props.width} height={props.height} viewBox={`0 0 ${props.width} ${props.height}`}>
-        <Defs>
-          <ClipPath id={props.clipId}>
-            <Path d={props.path} />
-          </ClipPath>
-          <Path id={pathId} d={props.path} />
-        </Defs>
-        <LinearGradient x1="0" y1="1" x2="0" y2="0" id={linearGradientId}>
-          <Stop offset="0" stopColor={colors.greyMedium} stopOpacity="1" />
-          <Stop offset="1" stopColor={colors.greyLight} stopOpacity="1" />
-        </LinearGradient>
-        {props.image ? (
-          <Image
-            width="100%"
-            height="100%"
-            preserveAspectRatio="xMidYMid slice"
-            href={{ uri: props.image }}
-            clipPath={`url(#${props.clipId})`}
-          />
-        ) : (
-          <G fill="none" fillRule="evenodd">
-            <Use fill={`url(#${linearGradientId})`} xlinkHref={`#${pathId}`} />
-          </G>
-        )}
-      </Svg>
-      {!props.image && Icon ? (
-        <IconContainer testID="iconContainer">
-          <Icon size={40} color={colors.greyMedium} />
-        </IconContainer>
-      ) : null}
-    </Container>
-  )
+    return (
+        <Container>
+            <SvgWithShadow width={props.width} height={props.height} viewBox={`0 0 ${props.width} ${props.height}`}>
+                <Defs>
+                    <ClipPath id={props.clipId}>
+                        <Path d={props.path}/>
+                    </ClipPath>
+                    <Path id={pathId} d={props.path}/>
+                </Defs>
+                <LinearGradient x1="0" y1="1" x2="0" y2="0" id={linearGradientId}>
+                    <Stop offset="0" stopColor={colors.greyMedium} stopOpacity="1"/>
+                    <Stop offset="1" stopColor={colors.greyLight} stopOpacity="1"/>
+                </LinearGradient>
+                {props.image ? (
+                    <Image
+                        width="100%"
+                        height="100%"
+                        preserveAspectRatio="xMidYMid slice"
+                        href={{uri: props.image}}
+                        clipPath={`url(#${props.clipId})`}
+                    />
+                ) : (
+                    <G fill="none" fillRule="evenodd">
+                        <Use fill={`url(#${linearGradientId})`} xlinkHref={`#${pathId}`}/>
+                    </G>
+                )}
+            </SvgWithShadow>
+            {!props.image && Icon ? (
+                <IconContainer testID="iconContainer">
+                    <Icon size={40} color={colors.greyMedium}/>
+                </IconContainer>
+            ) : null}
+        </Container>
+    )
 }
 
-const Container = styled.View(({ theme }) => ({
-  borderRadius: 4,
-  ...getShadow({
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowRadius: 2,
-    shadowColor: theme.colors.black,
-    shadowOpacity: 0.1,
-  }),
+const Container = styled.View(({theme}) => ({
+    borderRadius: 4,
+    ...Platform.select({
+        web: {},
+        default: getShadow({
+            shadowOffset: {
+                width: 0,
+                height: 2,
+            },
+            shadowRadius: 2,
+            shadowColor: theme.colors.black,
+            shadowOpacity: 0.1,
+        }),
+    })
 }))
 
+const SvgWithShadow = styled(Svg)({
+    filter: Platform.select({web: 'drop-shadow(0px 2px 4px rgba(105,106,111,0.50))'}),
+})
+
 const IconContainer = styled.View({
-  position: 'absolute',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flex: 1,
-  width: '100%',
-  height: '100%',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    width: '100%',
+    height: '100%',
 })
