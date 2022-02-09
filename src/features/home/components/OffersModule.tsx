@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import React, { useCallback } from 'react'
 
 import { useUserProfileInfo } from 'features/home/api'
-import { HomeOfferTile } from 'features/home/atoms'
+import { HomeOfferTile, SeeMore } from 'features/home/atoms'
 import { SearchParametersFields, DisplayParametersFields } from 'features/home/contentful'
 import { getPlaylistItemDimensionsFromLayout } from 'features/home/contentful/dimensions'
 import { useOfferModule } from 'features/home/pages/useOfferModule'
@@ -15,7 +15,8 @@ import { formatDates, formatDistance, getDisplayPrice } from 'libs/parsers'
 import { SearchHit, useParseSearchParameters } from 'libs/search'
 import { useCategoryIdMapping, useCategoryHomeLabelMapping } from 'libs/subcategories'
 import { PassPlaylist } from 'ui/components/PassPlaylist'
-import { CustomListRenderItem } from 'ui/components/Playlist'
+import { CustomListRenderItem, RenderFooterItem } from 'ui/components/Playlist'
+import { Link } from 'ui/web/link/Link'
 
 type OffersModuleProps = {
   search: SearchParametersFields[]
@@ -49,12 +50,13 @@ export const OffersModule = (props: OffersModuleProps) => {
     hits.length < nbHits &&
     !(parameters.tags || parameters.beginningDatetime || parameters.endingDatetime)
 
+  const params = { ...parseSearchParameters(parameters), hitsPerPage: 20 }
+
   const onPressSeeMore = showSeeMore
     ? () => {
         analytics.logClickSeeMore(moduleName)
         // When we navigate to the search page, we want to show 20 results per page,
         // not what is configured in contentful
-        const params = { ...parseSearchParameters(parameters), hitsPerPage: 20 }
         navigate(...getTabNavConfig('Search', params))
       }
     : undefined
@@ -87,6 +89,16 @@ export const OffersModule = (props: OffersModuleProps) => {
   const { itemWidth, itemHeight } = getPlaylistItemDimensionsFromLayout(display.layout)
 
   const shouldModuleBeDisplayed = hits.length > 0 && nbHits >= display.minOffers
+
+  const renderFooter: RenderFooterItem = useCallback(
+    ({ width, height }) => (
+      <Link to={{ screen: 'Offer', params }}>
+        <SeeMore width={width} height={height} onPress={onPressSeeMore as () => void} />
+      </Link>
+    ),
+    [onPressSeeMore]
+  )
+
   if (!shouldModuleBeDisplayed) return <React.Fragment />
   return (
     <PassPlaylist
@@ -99,6 +111,7 @@ export const OffersModule = (props: OffersModuleProps) => {
       coverUrl={cover}
       onPressSeeMore={onPressSeeMore}
       renderItem={renderItem}
+      renderFooter={renderFooter}
       keyExtractor={keyExtractor}
       onEndReached={logHasSeenAllTilesOnce}
     />

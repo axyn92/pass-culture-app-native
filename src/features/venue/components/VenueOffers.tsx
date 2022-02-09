@@ -4,6 +4,7 @@ import React, { useCallback } from 'react'
 import { PixelRatio } from 'react-native'
 import styled from 'styled-components/native'
 
+import { SeeMore } from 'features/home/atoms'
 import { Layout } from 'features/home/contentful'
 import { getPlaylistItemDimensionsFromLayout } from 'features/home/contentful/dimensions'
 import { UseNavigationType } from 'features/navigation/RootNavigator'
@@ -19,8 +20,9 @@ import { SearchHit } from 'libs/search'
 import { useCategoryIdMapping, useCategoryHomeLabelMapping } from 'libs/subcategories'
 import { ButtonWithLinearGradient } from 'ui/components/buttons/ButtonWithLinearGradient'
 import { PassPlaylist } from 'ui/components/PassPlaylist'
-import { CustomListRenderItem } from 'ui/components/Playlist'
+import { CustomListRenderItem, RenderFooterItem } from 'ui/components/Playlist'
 import { MARGIN_DP, Spacer, Typo } from 'ui/theme'
+import { Link } from 'ui/web/link/Link'
 
 interface Props {
   venueId: number
@@ -80,6 +82,15 @@ export const VenueOffers: React.FC<Props> = ({ venueId, layout = 'one-item-mediu
 
   const { itemWidth, itemHeight } = getPlaylistItemDimensionsFromLayout(layout)
 
+  const renderFooter: RenderFooterItem = useCallback(
+    ({ width, height }) => (
+      <Link to={{ screen: 'Offer', params }}>
+        <SeeMore width={width} height={height} onPress={onPressSeeMore as () => void} />
+      </Link>
+    ),
+    [onPressSeeMore]
+  )
+
   if (!venue || !venueOffers || venueOffers.hits.length === 0) {
     return <React.Fragment></React.Fragment>
   }
@@ -95,6 +106,7 @@ export const VenueOffers: React.FC<Props> = ({ venueId, layout = 'one-item-mediu
         itemWidth={itemWidth}
         onPressSeeMore={onPressSeeMore}
         renderItem={renderItem}
+        renderFooter={renderFooter}
         keyExtractor={keyExtractor}
       />
       <MarginContainer>

@@ -10,6 +10,7 @@ import { EyeSophisticated } from 'ui/svg/icons/EyeSophisticated'
 import { getSpacing, Spacer, Typo } from 'ui/theme'
 // eslint-disable-next-line no-restricted-imports
 import { ColorsEnum } from 'ui/theme/colors'
+
 type Props = Pick<
   ComponentProps<typeof Playlist>,
   'data' | 'itemWidth' | 'itemHeight' | 'testID' | 'keyExtractor' | 'renderItem' | 'onEndReached'
@@ -19,6 +20,7 @@ type Props = Pick<
   onPressSeeMore?: () => void
   coverUrl?: string | null
   onDarkBackground?: boolean
+  renderFooter?: RenderFooterItem
 }
 
 export const PassPlaylist = (props: Props) => {
@@ -82,7 +84,7 @@ export const PassPlaylist = (props: Props) => {
         scrollButtonOffsetY={props.itemHeight / 2}
         renderItem={props.renderItem}
         renderHeader={showHeader ? renderHeader : undefined}
-        renderFooter={showFooterSeeMore ? renderFooter : undefined}
+        renderFooter={showFooterSeeMore ? props.renderFooter || renderFooter : undefined}
         keyExtractor={props.keyExtractor}
         onEndReached={props.onEndReached}
       />
