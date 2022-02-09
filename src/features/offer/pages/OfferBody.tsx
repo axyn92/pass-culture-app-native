@@ -23,7 +23,7 @@ import { AccordionItem } from 'ui/components/AccordionItem'
 import { ButtonTertiaryBlack } from 'ui/components/buttons/ButtonTertiaryBlack'
 import { Hero } from 'ui/components/hero/Hero'
 import { SectionWithDivider } from 'ui/components/SectionWithDivider'
-import { Flag } from 'ui/svg/icons/Flag'
+import { Flag as DefaultFlag } from 'ui/svg/icons/Flag'
 import { getSpacing, Spacer, Typo } from 'ui/theme'
 
 import { useOffer } from '../api/useOffer'
@@ -159,7 +159,7 @@ export const OfferBody: FunctionComponent<Props> = ({ offerId, onScroll }) => {
               isOfferAlreadyReported ? t`Tu as déjà signalé cette offre` : t`Signaler l'offre`
             }
             disabled={!!isOfferAlreadyReported}
-            icon={() => <Flag size={20} />}
+            icon={() => <Flag />}
             onPress={showReportOfferDescription}
             testID={'report-offer-body'}
             justifyContent="flex-start"
@@ -194,3 +194,7 @@ const SectionReportOffer = styled.View({
 const MarginContainer = styled.View({
   marginHorizontal: getSpacing(6),
 })
+
+const Flag = styled(DefaultFlag).attrs(({ theme }) => ({
+  size: theme.icons.sizes.smaller,
+}))``

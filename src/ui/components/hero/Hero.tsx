@@ -24,13 +24,13 @@ export const Hero: React.FC<HeroProps & { imageUrl?: string }> = (props) => {
           Icon: mapCategoryToIcon(placeholderProps.categoryId),
           backgroundColors: [theme.colors.greyLight, theme.colors.greyMedium],
           borderRadius: theme.borderRadius.radius,
-          size: getSpacing(24),
+          size: getSpacing(24), // Special case where theme.icons.sizes is not used
         }
       : {
           Icon: mapVenueTypeToIcon(placeholderProps.venueType),
           borderRadius: theme.borderRadius.button,
           iconColor: theme.colors.white,
-          size: getSpacing(24),
+          size: getSpacing(24), // Special case where theme.icons.sizes is not used
         }
   )``
 
