@@ -12,9 +12,10 @@ type Props = {
   label: string
   placeholder: string
   options: string[] | number[]
+  onChange: (name: string, value: string | number) => void
 }
 
-export function DropDown({ label, placeholder, options }: Props) {
+export function DropDown({ label, placeholder, options, onChange }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState<string | number | null>(null)
   const toggling = () => setIsOpen(!isOpen)
@@ -22,6 +23,12 @@ export function DropDown({ label, placeholder, options }: Props) {
   const onOptionClicked = (value: string | number) => {
     setSelectedOption(value)
     setIsOpen(false)
+  }
+
+  const onChangeDate = () => {
+    if (selectedOption) {
+      onChange(selectedOption)
+    }
   }
 
   const dropDownInputID = uuidv4()
@@ -43,7 +50,11 @@ export function DropDown({ label, placeholder, options }: Props) {
         <Ul>
           {options.map((option: string | number) => (
             <Li key={option}>
-              <ButtonOption role="button" type="button" onMouseDown={() => onOptionClicked(option)}>
+              <ButtonOption
+                role="button"
+                type="button"
+                onMouseDown={() => onOptionClicked(option)}
+                onChange={onChangeDate}>
                 <Typo.Body>{option}</Typo.Body>
               </ButtonOption>
             </Li>
