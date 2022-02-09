@@ -21,7 +21,7 @@ export function DropDownWithAutocomplete({ label, placeholder, options }: Props)
   const [searchResults, setSearchResults] = useState<string[]>([])
   const [selectedOption, setSelectedOption] = useState<string | number | null>(null)
 
-  const toggling = () => setIsOpen(!isOpen)
+  // const toggling = () => setIsOpen(!isOpen)
 
   const handleChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setSearchValue(e.target.value)
@@ -31,12 +31,6 @@ export function DropDownWithAutocomplete({ label, placeholder, options }: Props)
     setSelectedOption(value)
     setSearchValue('')
     setIsOpen(false)
-  }
-
-  const onKeyDown = (e: { key: string }) => {
-    if (!isOpen && e.key === 'Enter') {
-      setIsOpen(true)
-    }
   }
 
   useEffect(() => {
@@ -59,9 +53,7 @@ export function DropDownWithAutocomplete({ label, placeholder, options }: Props)
           placeholder={placeholder}
           value={selectedOption || searchValue}
           onChange={handleChange}
-          onClick={toggling}
-          onKeyDown={onKeyDown}
-          onFocus={() => setIsOpen(true)}
+          // onClick={toggling}
           onBlur={() => setIsOpen(false)}
         />
       </StyledInputContainer>

@@ -23,16 +23,27 @@ interface Props {
 
 const MINIMUM_DATE = 1900
 
+type InitialDateProps = {
+  day?: number
+  month?: string
+  year?: number
+}
+
+const INITIAL_DATE: InitialDateProps = {
+  day: undefined,
+  month: undefined,
+  year: undefined,
+}
+
 export function DatePickerDropDown(props: Props) {
   const CURRENT_DATE = new Date()
 
-  const [date, setDate] = useState({
-    day: CURRENT_DATE.getDate(),
-    month: monthNames[CURRENT_DATE.getMonth()],
-    year: CURRENT_DATE.getFullYear(),
-  })
+  const [date, setDate] = useState<InitialDateProps>(INITIAL_DATE)
 
   const { optionGroups } = useMemo(() => {
+    if (date.year === undefined || date.month === undefined) {
+      return { optionGroups: INITIAL_DATE }
+    }
     const { month: selectedMonth, year: selectedYear } = date
     const selectedMonthIndex = monthNames.indexOf(selectedMonth)
     const currentYear = CURRENT_DATE.getFullYear()
@@ -47,13 +58,14 @@ export function DatePickerDropDown(props: Props) {
 
   console.log({ date })
 
-  function onDateChange(name: string, value: number | string) {
-    setDate((prevDateValues) => ({ ...prevDateValues, [name]: value }))
+  function onPartialDateChange(key: keyof InitialDateProps) {
+    return function (value: string) {
+      setDate((prevDateValues) => ({ ...prevDateValues, [key]: value }))
+    }
   }
 
   const dateMonth = monthNames.indexOf(date.month) + 1
   const birthdate = `${date.year}-${pad(dateMonth)}-${pad(date.day)}`
-  console.log('birthdate => ', new Date(birthdate))
 
   const { isDisabled, errorMessage } = useDatePickerErrorHandler(new Date(birthdate))
 
@@ -70,8 +82,8 @@ export function DatePickerDropDown(props: Props) {
           <DropDown
             label="Jour"
             placeholder="JJ"
-            options={optionGroups.day}
-            onChange={onDateChange}
+            options={optionGroups.day.map(String)}
+            onChange={onPartialDateChange('day')}
           />
         </DropDownContainer>
         <Spacer.Row numberOfSpaces={2} />
@@ -80,7 +92,7 @@ export function DatePickerDropDown(props: Props) {
             label="Mois"
             placeholder="MM"
             options={optionGroups.month}
-            onChange={onDateChange}
+            onChange={onPartialDateChange('month')}
           />
         </DropDownContainer>
         <Spacer.Row numberOfSpaces={2} />
@@ -88,8 +100,8 @@ export function DatePickerDropDown(props: Props) {
           <DropDown
             label="Année"
             placeholder="AAAA"
-            options={optionGroups.year}
-            onChange={onDateChange}
+            options={optionGroups.year.map(String)}
+            onChange={onPartialDateChange('year')}
           />
         </DropDownContainer>
       </Container>
