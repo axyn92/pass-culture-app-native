@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react'
 import Picker from 'react-mobile-picker'
 import styled from 'styled-components/native'
 
-import { DateInput } from 'features/auth/signup/SetBirthday/DateInput/DateInput'
+import { DateInput } from 'features/auth/signup/SetBirthday/atoms/DateInput/DateInput'
 import { useDatePickerErrorHandler } from 'features/auth/signup/SetBirthday/utils/useDatePickerErrorHandler'
 import { SignupData } from 'features/auth/signup/types'
 import {
